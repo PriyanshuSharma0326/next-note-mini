@@ -12,7 +12,7 @@ export default function Modal({ children }) {
         router.back();
     }, [router]);
 
-    const onClick= useCallback(
+    const onClick = useCallback(
         (e) => {
           if (e.target === overlay.current || e.target === wrapper.current) {
             if (onDismiss) onDismiss();
@@ -36,12 +36,12 @@ export default function Modal({ children }) {
     return (
         <div
             ref={overlay}
-            className="fixed w-screen h-screen z-10 left-0 top-0 bottom-0 bg-black/60 flex flex-col items-center justify-center"
+            className="fixed w-screen h-screen z-10 left-0 top-0 bottom-0 bg-black/40 flex flex-col items-center justify-center"
             onClick={onClick}
         >
             <div
                 ref={wrapper} 
-                className="w-1/3 border-[3px] border-gray-800"
+                className="p-4 flex flex-col gap-2 w-[30%] max-h-[50%] border-[3px] bg-white/10 border-[#B0B0B0] rounded-md"
             >
                 {children}
             </div>

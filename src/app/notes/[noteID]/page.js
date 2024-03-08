@@ -1,13 +1,18 @@
-import notesList from '@/app/notes';
-import Note from '@/components/note';
+'use client';
 
-export const generateMetadata = ({ params }) => {
-    return {
-        title: `Note ID: ${params.noteID}`
-    }
-}
+import Note from '@/components/note';
+import { useEffect, useState } from 'react';
 
 function NoteDetails({ params }) {
+    const [notesList, setNotesList] = useState([]);
+
+    useEffect(() => {
+        const storedNotes = localStorage.getItem('notes');
+        if (storedNotes) {
+            setNotesList(JSON.parse(storedNotes));
+        }
+    }, []);
+
     const note = notesList.find(item => item.id == params.noteID);
 
     return (
