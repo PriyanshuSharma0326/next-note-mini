@@ -2,13 +2,14 @@
 
 import Note from "@/components/note";
 import Link from "next/link";
+import { useEffect } from "react";
 
 function NotesList() {
     let notesList = JSON.parse(localStorage.getItem('notes')) || [];
 
     return (
         <div className="p-8 grid grid-cols-4 gap-x-4 gap-y-4">
-            {notesList.sort((a, b) => b.date - a.date).map(note => {
+            {notesList?.sort((a, b) => b.date - a.date).map(note => {
                 return (
                     <Link key={note.id} href={`/notes/${note.id}`}>
                         <Note>

@@ -2,13 +2,10 @@
 
 import Note from '@/components/note';
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 function Home() {
-    const overlay = useRef(null);
-    const wrapper = useRef(null);
-    
     const defaultInputs = {
         title: '',
         note: '',
@@ -37,32 +34,6 @@ function Home() {
         }
     }
 
-    const onDismiss = useCallback(() => {
-        // setTyping(false);
-        // console.log(userInputs);
-    }, []);
-
-    const handleClick = useCallback(
-        (e) => {
-          if (e.target === overlay.current || e.target === wrapper.current) {
-            if (onDismiss) onDismiss();
-          }
-        },
-        [onDismiss, overlay, wrapper]
-    );
-
-    const onKeyDown = useCallback(
-        (e) => {
-          if (e.key === "Escape") onDismiss();
-        },
-        [onDismiss]
-    );
-    
-    useEffect(() => {
-        document.addEventListener("keydown", onKeyDown);
-        return () => document.removeEventListener("keydown", onKeyDown);
-    }, [onKeyDown]);
-
     useEffect(() => {
         const storedNotes = localStorage.getItem('notes');
         if (storedNotes) {
@@ -71,8 +42,8 @@ function Home() {
     }, []);
 
     return (
-        <div onClick={handleClick} ref={overlay} className="w-full text-center">
-            <form ref={wrapper} className="note-input w-[40%] border-[1px] border-[#B0B0B0] rounded-md mx-auto my-8">
+        <div className="w-full text-center">
+            <form className="note-input w-[40%] border-[1px] border-[#B0B0B0] rounded-md mx-auto my-8">
                 <input 
                     name='title' 
                     value={userInputs.title} 
