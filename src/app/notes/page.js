@@ -2,7 +2,6 @@
 
 import Note from "@/components/note";
 import Link from "next/link";
-import { useEffect } from "react";
 
 function NotesList() {
     let notesList = JSON.parse(localStorage.getItem('notes')) || [];

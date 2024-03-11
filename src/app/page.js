@@ -2,10 +2,41 @@
 
 import Note from '@/components/note';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 function Home() {
+    const overlay = useRef(null);
+    const wrapper = useRef(null);
+
+    const onDismiss = useCallback(() => {
+        setTyping(false)
+        setUserInputs(defaultInputs);
+    }, []);
+
+    const onClick = useCallback(
+        (e) => {
+          if (e.target === overlay.current || e.target === wrapper.current) {
+            if (onDismiss) onDismiss();
+          }
+        },
+        [onDismiss, overlay, wrapper]
+    );
+
+    const onKeyDown = useCallback(
+        (e) => {
+          if (e.key === "Escape") onDismiss();
+        },
+        [onDismiss]
+    );
+    
+    useEffect(() => {
+        document.addEventListener("keydown", onKeyDown);
+        return () => document.removeEventListener("keydown", onKeyDown);
+    }, [onKeyDown]);
+
+
+    // Page essentials
     const defaultInputs = {
         title: '',
         note: '',
@@ -42,8 +73,8 @@ function Home() {
     }, []);
 
     return (
-        <div className="w-full text-center">
-            <form className="note-input w-[40%] border-[1px] border-[#B0B0B0] rounded-md mx-auto my-8">
+        <div ref={overlay} onClick={onClick} className="w-full text-center">
+            <form ref={wrapper} className="note-input w-[40%] border-[1px] border-[#B0B0B0] rounded-md mx-auto my-8">
                 <input 
                     name='title' 
                     value={userInputs.title} 
