@@ -5,7 +5,7 @@ export const metadata = {
         default: 'Home | Keep Clone',
         template: '%s | Keep Clone',
     },
-    description: 'A notes testing app',
+    description: 'A notes test app',
 }
 
 export default function RootLayout({ children }) {
